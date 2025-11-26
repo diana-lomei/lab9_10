@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: test_db
+    ports:
+      - "3306:3306"
+  backend:
+    build: ./src
+    environment:
+      DATABASE_URL: mysql://root:rootpass@db:3306/test_db
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
